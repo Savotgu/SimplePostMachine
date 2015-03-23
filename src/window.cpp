@@ -25,6 +25,10 @@ Window::Window()
     cleanBtn->setText("Stop and Clean");
 
     resultLine->setDisabled(1);
+    
+    connect(starBtn,SIGNAL(clicked()),this,SLOT(clickStartMachine()));
+    connect(cleanBtn,SIGNAL(clicked()),this,SLOT(clickAllStop()));
+
 
     QVBoxLayout * mainLayout = new QVBoxLayout;
     QHBoxLayout * bottonLayout = new QHBoxLayout;
@@ -40,21 +44,31 @@ Window::Window()
     mainLayout->addLayout(bottonLayout);
     setLayout(mainLayout);
 
-    setWindowTitle("Post Machinbe");
+    setWindowTitle("Post Machine");
 }
 
-void Window::alterResult(const QString textResult)
+void Window::alterResult(QLineEdit * lineEdit,const QString textResult)
 {
-    resultLine->setText(textResult);
+    lineEdit->setText(textResult);
 }
 
 void Window::clickStartMachine()
 {
-
+    QString text;
+    int x,y;
+    text=valueLine->text();
+    x = text.mid(0,1).toInt();
+    y = text.mid(2,1).toInt();
+    if(text.at(1)=='+')
+        x = x+y;
+    text.clear();
+    text=QString::number(x);
+    alterResult(resultLine,text);
 }
 
 void Window::clickAllStop()
 {
-    alterResult("aabb");
+    alterResult(valueLine,"");
+    alterResult(resultLine,"");
 }
 

@@ -26,7 +26,7 @@ public slots:
 
 public:
     Window();
-    void alterResult(const QString textResult);
+    void alterResult(QLineEdit *lineEdit, const QString textResult);
 };
 
 #endif // WINDOW

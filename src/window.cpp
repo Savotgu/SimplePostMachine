@@ -13,6 +13,9 @@ Window::Window()
     resultLine = new QLineEdit();
     starBtn = new QPushButton();
     cleanBtn = new QPushButton();
+    
+    QRegExp rx("[0-9][\\*\\/\\+\\-][0-9]");
+    valueLine->setValidator(new QRegExpValidator(rx));
 
     eqLbl->setText("String:");
     eqLbl->setBuddy(valueLine);

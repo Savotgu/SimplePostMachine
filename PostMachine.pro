@@ -1,5 +1,9 @@
 QT += widgets
-QMAKE_CXXFLAGS += -std=c++1y
+win32-g++{
+    QMAKE_CXXFLAGS += -std=c++1y
+}else:win32-msvc*{
+    cpp.cxxFlags: "-std=c++1y"
+}
 
 SOURCES += \
     src/main.cpp \

@@ -42,9 +42,8 @@ void mainWindow::mainFunction(QString qText)
     }else if(qText.at(1)=='-')
     {
         while(sText.back()=='#'){
-
-            nLogic.sub(sText);
-            //ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.sub(sText)));
+            //nLogic.sub(sText);
+            ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.sub(sText)));
             printNewLine(sText);
         }
     }

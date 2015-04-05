@@ -23,8 +23,8 @@ int PostLogic::sub(std::string &text)
 {
     int i(0);
     for(i;text[i]=='a';i++);
-    if(i>0 || text[i]!='#'){
-        qDebug() << QString::fromStdString(text);
+    if(i>0 && text[i]!='#'){
+        qDebug() << i;
         text.erase(i,1);
         text.erase(0,1);
     }
@@ -34,4 +34,6 @@ int PostLogic::sub(std::string &text)
     }
     return 0;
 }
+
+
 

@@ -6,7 +6,7 @@ const int idRole = Qt::UserRole;
 
 Window::Window()
 {
-    renderArea = new RenderArea;
+    //renderArea = new RenderArea;
     eqLbl = new QLabel();
     reLbl = new QLabel();
     valueLine = new QLineEdit();
@@ -15,6 +15,9 @@ Window::Window()
     cleanBtn = new QPushButton();
     
     QRegExp rx("[0-9][\\*\\/\\+\\-][0-9]");
+    valueLine->setValidator(new QRegExpValidator(rx));
+
+    QRegExp rx("([0-9])[\\*\\/\\+\\-][0-9]");
     valueLine->setValidator(new QRegExpValidator(rx));
 
     eqLbl->setText("String:");
@@ -30,10 +33,13 @@ Window::Window()
     connect(cleanBtn,SIGNAL(clicked()),this,SLOT(clickAllStop()));
 
 
+    connect(starBtn,SIGNAL(clicked()),this,SLOT(clickStartMachine()));
+    connect(cleanBtn,SIGNAL(clicked()),this,SLOT(clickAllStop()));
+
     QVBoxLayout * mainLayout = new QVBoxLayout;
     QHBoxLayout * bottonLayout = new QHBoxLayout;
     QVBoxLayout * firstLayout = new QVBoxLayout;
-    mainLayout->addWidget(renderArea);
+    //mainLayout->addWidget(renderArea);
     firstLayout->addWidget(eqLbl);
     firstLayout->addWidget(valueLine);
     firstLayout->addWidget(reLbl);

@@ -1,12 +1,14 @@
 QT += widgets
-QMAKE_CXXFLAGS += -std=c++0x
-CONFIG += console
+QMAKE_CXXFLAGS += -std=c++1y
 
 SOURCES += \
     src/main.cpp \
-    src/window.cpp \
-    src/renderarea.cpp
+    src/mainwindow.cpp \
+    src/postlogic.cpp
 
 HEADERS += \
-    includes/window.h \
-    includes/renderarea.h
+    includes/mainwindow.h \
+    includes/postlogic.h
+
+FORMS += \
+    mainwindow.ui

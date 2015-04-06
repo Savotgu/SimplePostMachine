@@ -2,20 +2,25 @@
 #include <iostream>
 #include <string>
 #include <QtDebug>
-#include <unistd.h>
 
 int PostLogic::sum(std::string &text)
 {
-    int a(0), b(0);
-    while(text[b]=='c')
-        b++;
-    if(text[b]!='#')
+    int a(0);
+    if(text[0]!='c' && text[0]!='#')
     {
-        a=1;
-        text[b]='c';
+            a=1;
+            text.insert(text.end()-1,'c');
+            text.erase(0,1);
+            qDebug() << 'aaa';
     }
     else
-        text[b]=' ';
+    {
+        for(int i(0);text[text.size()-1]=='#';i++)
+        {
+            if(text[i]=='#')
+                text[i]=' ';
+        }
+    }
     return a;
 }
 
@@ -23,7 +28,7 @@ int PostLogic::sub(std::string &text)
 {
     int i(0);
     for(;text[i]=='a';i++);
-    if(i>0 && text[i]!='#'){
+    if(i>0 && text[i]!='#' && text[i]!='c'){
         qDebug() << i;
         text.erase(i,1);
         text.erase(0,1);
@@ -47,7 +52,7 @@ int PostLogic::mul(std::string &text)
         {
             if(text[i]=='b')
             {
-                text.insert(text.begin()+(i+1),'c');
+                text.insert(text.end()-1,'c');
                 sum+=1;
             }
             i++;

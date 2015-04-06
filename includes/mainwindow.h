@@ -19,6 +19,10 @@ class mainWindow : public QWidget
 public slots:
     void clean();
     void start();
+    void print();
+    /*void completo(QString str);//
+signals:
+    void completou(QString str);*/
 
 public:
     void mainFunction(QString qText);
@@ -29,6 +33,7 @@ public:
     ~mainWindow();
 
 private:
+    QList<std::string> lista;
     QTimer *timer;
     PostLogic nLogic;
     Ui::mainWindow *ui;

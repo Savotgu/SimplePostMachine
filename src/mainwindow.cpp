@@ -4,12 +4,12 @@
 #include <QtWidgets>
 #include <QTimer>
 #include <QDebug>
-#include <thread>
 
 mainWindow::mainWindow(QWidget *parent):QWidget(parent),ui(new Ui::mainWindow)
 {
 
     ui->setupUi(this);
+    timer= new QTimer(this);
     ui->textOp->setFont(QFont("Arial",12));
     ui->lineOp->setFocus();
     QRegExp rx("[0-9][\\*\\/\\+\\-][0-9]");
@@ -18,11 +18,16 @@ mainWindow::mainWindow(QWidget *parent):QWidget(parent),ui(new Ui::mainWindow)
     ui->lineOp->setValidator(new QRegExpValidator(rx));
     connect(ui->btnClean, SIGNAL(clicked()),this,SLOT(clean()));
     connect(ui->btnStart, SIGNAL(clicked()),this,SLOT(start()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(print()));
+    connect(ui->lineOp, SIGNAL(returnPressed()), ui->btnStart, SLOT(click()));
+    //connect(this, SIGNAL(completou(QString)), this, SLOT(completo(QString)));
+
 }
 
 void mainWindow::mainFunction(QString qText)
 {
     std::string sText;
+    //std::list<std::string> listString;
     for(int i(0);i<qText.mid(0,1).toInt();i++){
         printText("a");
         sText=sText + "a";
@@ -39,30 +44,31 @@ void mainWindow::mainFunction(QString qText)
         while(sText.back()=='#')
         {
             ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.sum(sText)));
-            printNewLine(sText);
+            lista.push_back(sText);
         }
     }else if(qText.at(1)=='-')
     {
         while(sText.back()=='#'){
             ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.sub(sText)));
-            printNewLine(sText);
+            lista.push_back(sText);
         }
     }else if(qText.at(1)=='*')
     {
         while(sText.back()=='#')
         {
             ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.mul(sText)));
-            printNewLine(sText);
+            lista.push_back(sText);
         }
     }else
     {
         while(sText.back()=='#')
         {
             ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.div(sText)));
-            printNewLine(sText);
+            lista.push_back(sText);
         }
     }
-
+    timer->setInterval(1000);
+    timer->start();
 }
 
 void mainWindow::onfBtn()
@@ -98,6 +104,24 @@ void mainWindow::start()
         onfBtn();
     }
 }
+
+void mainWindow::print()
+{
+    if(lista.isEmpty()){
+        timer->stop();
+        //emit completou("Corre negada");
+    }
+    else
+    {
+        printNewLine(lista.front());
+        lista.pop_front();
+    }
+}
+
+/*void mainWindow::completo(QString str)
+{
+    QMessageBox::information(this, "Info", str);
+}*/
 
 mainWindow::~mainWindow()
 {

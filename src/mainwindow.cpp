@@ -10,6 +10,8 @@ mainWindow::mainWindow(QWidget *parent):QWidget(parent),ui(new Ui::mainWindow)
 {
 
     ui->setupUi(this);
+    ui->textOp->setFont(QFont("Arial",12));
+    ui->lineOp->setFocus();
     QRegExp rx("[0-9][\\*\\/\\+\\-][0-9]");
     ui->textOp->setStyleSheet("color:black;background-color:white;");
     ui->lineResult->setStyleSheet("color:black;background-color:white;");
@@ -42,8 +44,21 @@ void mainWindow::mainFunction(QString qText)
     }else if(qText.at(1)=='-')
     {
         while(sText.back()=='#'){
-            //nLogic.sub(sText);
             ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.sub(sText)));
+            printNewLine(sText);
+        }
+    }else if(qText.at(1)=='*')
+    {
+        while(sText.back()=='#')
+        {
+            ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.mul(sText)));
+            printNewLine(sText);
+        }
+    }else
+    {
+        while(sText.back()=='#')
+        {
+            ui->lineResult->setText(QString::number(ui->lineResult->text().toInt()+nLogic.div(sText)));
             printNewLine(sText);
         }
     }
@@ -75,11 +90,13 @@ void mainWindow::clean()
 
 void mainWindow::start()
 {
-    ui->textOp->clear();
-    ui->lineResult->clear();
-    onfBtn();
-    mainFunction(ui->lineOp->text());
-    onfBtn();
+    if(ui->lineOp->text().size()==3){
+        ui->textOp->clear();
+        ui->lineResult->clear();
+        onfBtn();
+        mainFunction(ui->lineOp->text());
+        onfBtn();
+    }
 }
 
 mainWindow::~mainWindow()

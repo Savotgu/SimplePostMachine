@@ -9,6 +9,8 @@ class PostLogic{
 public:
     int sum(std::string &text);
     int sub(std::string &text);
+    int mul(std::string &text);
+    int div(std::string &text);
 };
 
 #endif // POSTLOGIC_H
